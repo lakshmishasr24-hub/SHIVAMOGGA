@@ -5,8 +5,7 @@ import { LoadingScreen } from './components/LoadingScreen';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { DistanceExplorer } from './components/DistanceExplorer';
-import { InteractiveMap } from './components/InteractiveMap';
-import { DestinationGrid } from './components/DestinationGrid';
+import { DestinationExplorer } from './components/DestinationExplorer';
 import { FeaturedCarousel } from './components/FeaturedCarousel';
 import { CategoryExplorer } from './components/CategoryExplorer';
 import { SmartSearchFilter } from './components/SmartSearchFilter';
@@ -232,22 +231,20 @@ export const App: React.FC = () => {
           />
         </div>
 
-        {/* Section 10: Places Worth Discovering (Destination Grid) */}
-        <DestinationGrid
+        {/* Section 10 & 8: Main Split Explorer (Cards on Left + Sticky Map on Right) */}
+        <DestinationExplorer
           destinations={filteredDestinations}
           onSelectDestination={handleSelectDestination}
           savedDestinationIds={savedDestinationIds}
           onToggleSaveDestination={handleToggleSaveDestination}
-        />
-
-        {/* Section 8 & 9: Main Interactive 150 KM Map */}
-        <InteractiveMap
-          destinations={DESTINATIONS}
-          selectedRadius={selectedRadius}
-          onRadiusChange={setSelectedRadius}
-          onSelectDestination={handleSelectDestination}
           userLocation={userLocation}
           onUserLocationChange={setUserLocation}
+          selectedRadius={selectedRadius}
+          onRadiusChange={setSelectedRadius}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
         />
 
         {/* Section 4: Destination Category Explorer */}

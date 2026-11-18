@@ -38,15 +38,77 @@
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(20, 61, 48, 0.3) 0%, rgba(18, 24, 22, 0.6) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: linear-gradient(135deg, rgba(20, 61, 48, 0.28) 0%, rgba(18, 24, 22, 0.7) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(56, 131, 108, 0.2);
 }
 
 .glass-card:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 0 12px 40px -10px rgba(15, 44, 35, 0.6);
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow: 0 16px 40px -10px rgba(15, 44, 35, 0.65), 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+/* Link Hover Underline Animation */
+.hover-underline-animation {
+  position: relative;
+}
+.hover-underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0px;
+  left: 10%;
+  background: linear-gradient(90deg, #D4AF37, #38836C);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 9999px;
+}
+.hover-underline-animation:hover::after {
+  width: 80%;
+}
+
+/* Mouse Scroll Wheel Animation */
+@keyframes scrollWheelDot {
+  0% { transform: translateY(0); opacity: 1; }
+  60% { transform: translateY(9px); opacity: 0.15; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.scroll-wheel-dot {
+  animation: scrollWheelDot 1.8s ease-in-out infinite;
+}
+
+/* Ken Burns Slow Cinematic Zoom */
+@keyframes kenBurnsSlow {
+  0% { transform: scale(1.0) translate(0, 0); }
+  50% { transform: scale(1.08) translate(-1.5%, -1%); }
+  100% { transform: scale(1.0) translate(0, 0); }
+}
+.kenburns-bg {
+  animation: kenBurnsSlow 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Drifting Mist / Fog Layers for Western Ghats Mood */
+@keyframes driftMist1 {
+  0% { transform: translate3d(-10%, 0, 0); opacity: 0.15; }
+  50% { transform: translate3d(5%, -2%, 0); opacity: 0.28; }
+  100% { transform: translate3d(20%, 0, 0); opacity: 0.15; }
+}
+@keyframes driftMist2 {
+  0% { transform: translate3d(15%, 0, 0); opacity: 0.12; }
+  50% { transform: translate3d(-5%, 2%, 0); opacity: 0.24; }
+  100% { transform: translate3d(-20%, 0, 0); opacity: 0.12; }
+}
+.mist-layer-1 {
+  background: radial-gradient(ellipse at 30% 60%, rgba(200, 225, 215, 0.35) 0%, transparent 65%);
+  animation: driftMist1 28s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+.mist-layer-2 {
+  background: radial-gradient(ellipse at 70% 40%, rgba(180, 215, 200, 0.3) 0%, transparent 70%);
+  animation: driftMist2 34s ease-in-out infinite alternate;
+  will-change: transform, opacity;
 }
 
 /* Leaflet Overrides & High-Fidelity Animations */
@@ -55,31 +117,31 @@
   height: 100%;
   background-color: #E5E7EB !important;
   font-family: inherit;
+  z-index: 10;
 }
 
-/* Google-Maps-Style Crisp Zoom & Attribution Controls */
 .leaflet-control-zoom {
   border: 1px solid rgba(15, 23, 42, 0.14) !important;
   border-radius: 0.75rem !important;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
 }
 
 .leaflet-control-zoom a {
   background: rgba(255, 255, 255, 0.96) !important;
   color: #1F2937 !important;
   border-bottom: 1px solid rgba(15, 23, 42, 0.1) !important;
-  width: 34px !important;
-  height: 34px !important;
-  line-height: 34px !important;
-  font-size: 16px !important;
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
   transition: background-color 0.2s ease, color 0.2s ease !important;
 }
 
 .leaflet-control-zoom a:hover {
   background: #F3F4F6 !important;
-  color: #1A73E8 !important;
+  color: #059669 !important;
 }
 
 .leaflet-control-zoom a:last-child {
@@ -96,10 +158,10 @@
 }
 
 .leaflet-control-attribution a {
-  color: #1A73E8 !important;
+  color: #059669 !important;
 }
 
-/* Springy Popup Entrance Animation (applied on wrapper, never .leaflet-popup itself) */
+/* Custom Popup Styling */
 @keyframes popupSpringIn {
   0% {
     opacity: 0;
@@ -116,37 +178,37 @@
 }
 
 .leaflet-popup-content-wrapper {
-  background: rgba(14, 20, 18, 0.96) !important;
+  background: rgba(14, 20, 18, 0.98) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   color: #F4F6F4 !important;
-  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  border: 1px solid rgba(212, 175, 55, 0.45) !important;
   border-radius: 1.25rem !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.88), 0 0 32px rgba(20, 61, 48, 0.45) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.88), 0 0 32px rgba(20, 61, 48, 0.5) !important;
   padding: 0 !important;
   overflow: hidden;
-  animation: popupSpringIn 0.36s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: popupSpringIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   transform-origin: bottom center;
 }
 
 .leaflet-popup-close-button {
   color: #F4F6F4 !important;
-  background: rgba(11, 15, 14, 0.7) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background: rgba(11, 15, 14, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   border-radius: 9999px !important;
-  width: 26px !important;
-  height: 26px !important;
-  line-height: 24px !important;
-  top: 10px !important;
-  right: 10px !important;
+  width: 24px !important;
+  height: 24px !important;
+  line-height: 22px !important;
+  top: 8px !important;
+  right: 8px !important;
   text-align: center !important;
   z-index: 10 !important;
   backdrop-filter: blur(6px);
-  transition: background-color 0.2s ease, transform 0.2s ease !important;
+  transition: all 0.2s ease !important;
 }
 
 .leaflet-popup-close-button:hover {
-  background: rgba(212, 175, 55, 0.9) !important;
+  background: rgba(212, 175, 55, 0.95) !important;
   color: #0B0F0E !important;
   transform: scale(1.08);
 }
@@ -162,16 +224,131 @@
 }
 
 .leaflet-popup-tip {
-  background: rgba(14, 20, 18, 0.96) !important;
+  background: rgba(14, 20, 18, 0.98) !important;
   border: 1px solid rgba(212, 175, 55, 0.35) !important;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Rich Popup Content Elements */
+.map-popup-card {
+  width: 280px;
+}
+.map-popup-image-wrap {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+}
+.map-popup-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.map-popup-card:hover .map-popup-image {
+  transform: scale(1.08);
+}
+.map-popup-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(14, 20, 18, 0.95), transparent 60%);
+}
+.map-popup-category-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+.map-popup-dist-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 8px;
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  color: #FEF08A;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+.map-popup-body {
+  padding: 10px 12px 12px;
+}
+.map-popup-title {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.25;
+}
+.map-popup-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 10px;
+  color: #A7F3D0;
+}
+.map-popup-snippet {
+  margin: 6px 0 10px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: #D1D5DB;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.map-popup-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.map-popup-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+.map-btn-navigate {
+  background: #1D4ED8;
+  color: #FFFFFF;
+}
+.map-btn-navigate:hover {
+  background: #2563EB;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+.map-btn-explore {
+  background: #143D30;
+  color: #FEF08A;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+.map-btn-explore:hover {
+  background: #1E4D3E;
+  border-color: #D4AF37;
+  box-shadow: 0 4px 12px rgba(20, 61, 48, 0.5);
 }
 
 /* Smooth Tile Fade-in */
 .leaflet-tile-loaded {
   animation: tileFadeIn 0.35s ease-out;
 }
-
 @keyframes tileFadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -179,98 +356,79 @@
 
 /* Shivamogga Hub Radar Beacon & Rotating Sweep */
 @keyframes hubRadarRing {
-  0% {
-    transform: translate(-50%, -50%) scale(0.55);
-    opacity: 0.9;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2.35);
-    opacity: 0;
-  }
+  0% { transform: translate(-50%, -50%) scale(0.55); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(2.35); opacity: 0; }
 }
-
 @keyframes hubSweepSpin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
 @keyframes crownFloat {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-  50% {
-    transform: translateY(-2px) rotate(5deg) scale(1.08);
-  }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-2px) rotate(4deg); }
 }
 
 .shivamogga-hub-marker {
   background: transparent !important;
   border: none !important;
 }
-
 .shivamogga-hub-shell {
   position: relative;
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
-
 .shivamogga-hub-ring {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 54px;
-  height: 54px;
+  width: 50px;
+  height: 50px;
   border-radius: 9999px;
-  border: 2px solid rgba(212, 175, 55, 0.8);
-  box-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
+  border: 2px solid rgba(212, 175, 55, 0.85);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
   pointer-events: none;
-  animation: hubRadarRing 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  animation: hubRadarRing 2.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
-
 .shivamogga-hub-ring.ring-delay {
-  animation-delay: 1.3s;
+  animation-delay: 1.25s;
   border-color: rgba(82, 163, 137, 0.75);
 }
-
 .shivamogga-hub-sweep {
   position: absolute;
-  inset: -10px;
+  inset: -8px;
   border-radius: 9999px;
-  background: conic-gradient(from 0deg, rgba(212, 175, 55, 0.38) 0deg, rgba(212, 175, 55, 0.05) 55deg, transparent 90deg);
+  background: conic-gradient(from 0deg, rgba(212, 175, 55, 0.35) 0deg, rgba(212, 175, 55, 0.05) 55deg, transparent 90deg);
   pointer-events: none;
   animation: hubSweepSpin 4.5s linear infinite;
 }
-
 .shivamogga-hub-badge {
   position: relative;
   z-index: 2;
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   background: linear-gradient(135deg, #D4AF37 0%, #143D30 100%);
-  border: 2.5px solid #FCFDFB;
+  border: 2px solid #FFFFFF;
   border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 28px rgba(212, 175, 55, 0.75), 0 8px 20px rgba(0, 0, 0, 0.65);
-  font-size: 20px;
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.75), 0 6px 16px rgba(0, 0, 0, 0.6);
+  font-size: 18px;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .shivamogga-hub-shell:hover .shivamogga-hub-badge {
   transform: scale(1.12);
 }
-
 .shivamogga-hub-badge .hub-icon {
   display: inline-block;
   animation: crownFloat 3s ease-in-out infinite;
 }
 
-/* Custom Destination Markers: NEVER set transform/animation on .custom-map-marker itself (Leaflet owns it) */
+/* Custom Category Destination Markers */
 .custom-map-marker {
   background: transparent !important;
   border: none !important;
@@ -317,28 +475,24 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 8px;
+  gap: 5px;
+  padding: 4px 7px;
   border-radius: 9999px;
   background: var(--pin-color, #059669);
-  border: 2px solid #FFFFFF;
+  border: 1.5px solid #FFFFFF;
   color: #FFFFFF;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   white-space: nowrap;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.36), 0 1px 3px rgba(0, 0, 0, 0.25);
-  animation: markerSpringDrop 0.52s cubic-bezier(0.34, 1.56, 0.64, 1) var(--pin-delay, 0ms) backwards;
-  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.24s ease, border-color 0.24s ease, padding 0.24s ease, background-color 0.24s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  animation: markerSpringDrop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--pin-delay, 0ms) backwards;
+  transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
   will-change: transform;
 }
 
 .map-pin-emoji {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .map-pin-label {
@@ -346,14 +500,14 @@
   opacity: 0;
   overflow: hidden;
   transition: max-width 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, margin 0.28s ease;
-  margin-left: -4px;
+  margin-left: -3px;
 }
 
 .map-pin-dist {
   max-width: 0;
   opacity: 0;
   overflow: hidden;
-  font-size: 10px;
+  font-size: 9px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   color: #FEF08A;
   transition: max-width 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
@@ -362,27 +516,31 @@
 .map-pin-card.show-label .map-pin-label,
 .map-pin-card.is-active .map-pin-label,
 .map-pin-anchor:hover .map-pin-label {
-  max-width: 170px;
+  max-width: 150px;
   opacity: 1;
   margin-left: 0;
 }
 
 .map-pin-card.is-active .map-pin-dist,
 .map-pin-anchor:hover .map-pin-dist {
-  max-width: 56px;
+  max-width: 50px;
   opacity: 1;
 }
 
 .map-pin-anchor:hover .map-pin-card,
 .map-pin-card.is-active {
-  transform: translateY(-6px) scale(1.08);
-  padding: 6px 11px;
+  transform: translateY(-5px) scale(1.08);
+  padding: 5px 10px;
   border-color: #FFFFFF;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(26, 115, 232, 0.45);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(212, 175, 55, 0.45);
 }
 
 .map-pin-card.is-active {
-  background: #1A73E8;
+  background: #D4AF37;
+  color: #0B0F0E;
+}
+.map-pin-card.is-active .map-pin-dist {
+  color: #143D30;
 }
 
 .map-pin-pulse {
@@ -390,10 +548,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 9999px;
-  border: 2px solid #1A73E8;
+  border: 2px solid #D4AF37;
   pointer-events: none;
 }
 
@@ -405,161 +563,108 @@
 
 .map-pin-stem {
   width: 2px;
-  height: 6px;
+  height: 5px;
   background: var(--pin-color, #059669);
   transition: height 0.24s ease;
 }
 
 .map-pin-anchor:hover .map-pin-stem,
 .map-pin-card.is-active + .map-pin-stem {
-  height: 10px;
+  height: 9px;
 }
 
 .map-pin-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 9999px;
   background: var(--pin-color, #059669);
   border: 1.5px solid #FFFFFF;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* User GPS Pulsing Marker */
-.user-gps-marker {
+/* Cluster Markers */
+.dest-cluster-marker {
   background: transparent !important;
   border: none !important;
 }
 
+.dest-cluster-pin {
+  width: 42px;
+  height: 42px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #143D30 0%, #0B1C15 100%);
+  border: 2px solid #D4AF37;
+  color: #F4F6F4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 14px rgba(212, 175, 55, 0.4);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.1;
+}
+
+.dest-cluster-pin:hover {
+  transform: scale(1.15);
+  border-color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.6);
+}
+
+/* User GPS Marker */
+.user-gps-marker {
+  background: transparent !important;
+  border: none !important;
+}
 .user-gps-shell {
   position: relative;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .user-gps-ring {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 9999px;
   border: 2px solid #38B6FF;
   animation: hubRadarRing 1.8s ease-out infinite;
 }
-
 .user-gps-dot {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 9999px;
   background: #38B6FF;
-  border: 2.5px solid #FFFFFF;
-  box-shadow: 0 0 18px #38B6FF;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 14px #38B6FF;
 }
 
-/* Circulating Dashed Radius Boundary & Curved Route Beam */
+/* Circulating Dashed Radius Boundary */
 @keyframes dashCirculate {
   to {
     stroke-dashoffset: -56;
   }
 }
-
-@keyframes routeBeamFlow {
-  to {
-    stroke-dashoffset: -36;
-  }
-}
-
 .leaflet-overlay-pane svg path.map-radius-ring {
-  animation: dashCirculate 6s linear infinite;
+  animation: dashCirculate 7s linear infinite;
 }
 
-.leaflet-overlay-pane svg path.map-route-arc {
-  animation: routeBeamFlow 1.15s linear infinite;
-}
-
-/* Target Destination Ground Ripple */
-.map-target-beacon {
-  background: transparent !important;
-  border: none !important;
-}
-
-.map-target-ripple {
-  width: 44px;
-  height: 44px;
-  margin-left: -22px;
-  margin-top: -22px;
-  border-radius: 9999px;
-  border: 2.5px solid rgba(26, 115, 232, 0.95);
-  box-shadow: 0 0 18px rgba(26, 115, 232, 0.45);
-  animation: targetRipple 1.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-  pointer-events: none;
-}
-
-@keyframes targetRipple {
-  0% {
-    transform: scale(0.35);
-    opacity: 0.95;
-  }
-  100% {
-    transform: scale(1.9);
-    opacity: 0;
-  }
-}
-
-/* Popup Action Buttons Animations */
-.map-popup-card .map-popup-image {
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.map-popup-card:hover .map-popup-image {
-  transform: scale(1.08);
-}
-
-.map-btn-explore {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-.map-btn-explore:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px -2px rgba(20, 61, 48, 0.8), 0 0 14px rgba(212, 175, 55, 0.45) !important;
-  filter: brightness(1.15) !important;
-}
-
-.map-btn-explore:active {
-  transform: translateY(0) scale(0.96) !important;
-}
-
-.map-btn-navigate {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-.map-btn-navigate:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px -2px rgba(29, 78, 216, 0.7), 0 0 16px rgba(96, 165, 250, 0.5) !important;
-  filter: brightness(1.15) !important;
-}
-
-.map-btn-navigate:active {
-  transform: translateY(0) scale(0.96) !important;
-}
-
-.map-btn-navigate svg {
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.map-btn-navigate:hover svg {
-  transform: rotate(25deg) scale(1.2);
-}
-
-/* Reduced Motion */
+/* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .kenburns-bg, .mist-layer-1, .mist-layer-2 {
+    animation: none !important;
   }
 }
