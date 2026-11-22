@@ -26,8 +26,10 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     // Check for prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
-      setCount(target);
-      return;
+      const frameId = requestAnimationFrame(() => {
+        setCount(target);
+      });
+      return () => cancelAnimationFrame(frameId);
     }
 
     let startTimestamp: number | null = null;

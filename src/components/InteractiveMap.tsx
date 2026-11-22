@@ -22,7 +22,7 @@ interface InteractiveMapProps {
   isCompact?: boolean;
 }
 
-type MapStyleId = 'map' | 'satellite' | 'terrain' | 'osm';
+type MapStyleId = 'google' | 'satellite' | 'terrain' | 'osm' | 'esri';
 
 interface TileLayerConfig {
   label: string;
@@ -34,39 +34,42 @@ interface TileLayerConfig {
 }
 
 const TILE_LAYERS: Record<MapStyleId, TileLayerConfig> = {
-  map: {
-    label: 'Map',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Tiles &copy; Esri &mdash; Street Map',
-    maxZoom: 19,
+  google: {
+    label: 'Google Maps',
+    url: 'https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+    subdomains: '0123',
+    attribution: '&copy; Google Maps',
+    maxZoom: 20,
   },
   satellite: {
     label: 'Satellite',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    overlayUrl:
-      'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Tiles &copy; Esri &mdash; Satellite',
-    maxZoom: 19,
+    url: 'https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+    subdomains: '0123',
+    attribution: '&copy; Google Satellite',
+    maxZoom: 20,
   },
   terrain: {
     label: 'Terrain',
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Tiles &copy; Esri &mdash; Topo',
-    maxZoom: 19,
+    url: 'https://mt{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
+    subdomains: '0123',
+    attribution: '&copy; Google Terrain',
+    maxZoom: 20,
   },
   osm: {
-    label: 'Streets',
+    label: 'OpenStreetMap',
     url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     attribution: '&copy; OpenStreetMap contributors',
     maxZoom: 19,
   },
+  esri: {
+    label: 'Esri Street',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Tiles &copy; Esri',
+    maxZoom: 19,
+  },
 };
 
-export const SHIVAMOGGA_COORDS: [number, number] = [13.9299, 75.5681];
-export const SHIVAMOGGA_BOUNDS_150KM: [[number, number], [number, number]] = [
-  [12.6, 74.2],
-  [15.3, 76.9],
-];
+const SHIVAMOGGA_COORDS: [number, number] = [13.9299, 75.5681];
 
 const CATEGORY_ICONS: Record<string, string> = {
   Waterfalls: '💧',
@@ -135,7 +138,7 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
   const markersByIdRef = useRef<globalThis.Map<string, L.Marker>>(new globalThis.Map());
   const userMarkerRef = useRef<L.Marker | null>(null);
 
-  const [mapStyle, setMapStyle] = useState<MapStyleId>('map');
+  const [mapStyle, setMapStyle] = useState<MapStyleId>('google');
   const [currentZoom, setCurrentZoom] = useState<number>(9);
   const [isInteractingMobile, setIsInteractingMobile] = useState<boolean>(false);
   const [isLocating, setIsLocating] = useState<boolean>(false);

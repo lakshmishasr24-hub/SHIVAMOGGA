@@ -31,7 +31,7 @@ export const App: React.FC = () => {
     try {
       const stored = localStorage.getItem('shivamogga_150_trip');
       return stored ? JSON.parse(stored) : ['jog-falls', 'kodachadri-peak', 'agumbe-sunset-point', 'sringeri-sharada-peetham'];
-    } catch (e) {
+    } catch {
       return ['jog-falls', 'kodachadri-peak', 'agumbe-sunset-point', 'sringeri-sharada-peetham'];
     }
   });
@@ -45,7 +45,9 @@ export const App: React.FC = () => {
   useEffect(() => {
     try {
       localStorage.setItem('shivamogga_150_trip', JSON.stringify(savedDestinationIds));
-    } catch (e) {}
+    } catch {
+      // ignore storage write errors
+    }
   }, [savedDestinationIds]);
 
   // Handle URL hashtag navigation / deep linking (e.g. #destination/jog-falls)
@@ -115,7 +117,11 @@ export const App: React.FC = () => {
     else if (selectedDistanceRange === '125–150 KM') matchesDistanceRange = dest.distanceFromShivamogga > 125 && dest.distanceFromShivamogga <= 150;
 
     // Category filter
-    const matchesCategory = selectedCategory === 'All' || dest.category === selectedCategory;
+    const matchesCategory =
+      selectedCategory === 'All' ||
+      dest.category === selectedCategory ||
+      (selectedCategory === 'Trekking' && (dest.category === 'Mountains & Hills' || dest.category === 'Trekking')) ||
+      (selectedCategory === 'Historical Places' && (dest.category === 'Forts' || dest.category === 'Heritage & Culture'));
 
     // District filter
     const matchesDistrict = selectedDistrict === 'All' || dest.district === selectedDistrict;

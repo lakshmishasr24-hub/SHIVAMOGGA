@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import type { Destination } from '../types/destination';
 import { Navigation, X, Loader2, ShieldCheck } from 'lucide-react';
@@ -38,7 +38,7 @@ export const NearMeModal: React.FC<NearMeModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const requestLocation = () => {
+  const requestLocation = useCallback(() => {
     if (!navigator.geolocation) {
       setErrorMsg('Geolocation is not supported by your browser.');
       return;
@@ -63,13 +63,16 @@ export const NearMeModal: React.FC<NearMeModalProps> = ({
       },
       { timeout: 10000 }
     );
-  };
+  }, [setUserLocation]);
 
   useEffect(() => {
     if (isOpen && !userLocation) {
-      requestLocation();
+      const timer = setTimeout(() => {
+        requestLocation();
+      }, 0);
+      return () => clearTimeout(timer);
     }
-  }, [isOpen]);
+  }, [isOpen, userLocation, requestLocation]);
 
   if (!isOpen) return null;
 

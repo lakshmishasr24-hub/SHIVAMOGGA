@@ -64,7 +64,9 @@ export const DestinationDetailModal: React.FC<DestinationDetailModalProps> = ({
           text: text,
           url: window.location.href,
         });
-      } catch (e) {}
+      } catch {
+        // User cancelled or share failed
+      }
     } else {
       await navigator.clipboard.writeText(window.location.href);
       alert('Link copied to clipboard!');

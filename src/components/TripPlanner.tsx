@@ -56,7 +56,7 @@ export const TripPlanner: React.FC<TripPlannerProps> = ({
           text: text,
           url: window.location.href,
         });
-      } catch (err) {
+      } catch {
         // user cancelled or share failed
       }
     } else {
